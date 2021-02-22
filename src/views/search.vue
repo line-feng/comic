@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div @click="toDetails(item)" v-for="(item,index) in list" :key='item + index' style="display: flex;padding: 10px;">
+		<!-- <div @click="toDetails(item)" v-for="(item,index) in list" :key='item + index' style="display: flex;padding: 10px;">
 			<van-image
 			  width="100"
 			  height="100"
@@ -14,7 +14,18 @@
 					{{ item.newPage }}
 				</div>
 			</div>
-		</div>
+		</div> -->
+		<van-swipe-cell v-for="(item,index) in list" :key='item + index' @click="toDetails(item)">
+		  <van-card
+		    :desc="item.newPage"
+		    :title="item.title"
+		    class="goods-card"
+		    :thumb="item.imgSrc"
+		  />
+		  <template #right>
+		    <van-button square text="删除" type="danger" class="delete-button" />
+		  </template>
+		</van-swipe-cell>
 	</div>
 </template>
 
