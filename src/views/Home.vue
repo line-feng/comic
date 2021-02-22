@@ -1,18 +1,30 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div>
+		<input v-model="searchValue" /><button @click="toPath('/search')">btn</button>
+	</div>
+	home
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+	export default{
+		data(){
+			return{
+				searchValue:'隆123'
+			}
+		},
+		methods:{
+			toPath(path){
+				this.$router.push({
+					name:'search',
+					params:{
+						searchValue:this.searchValue
+					}
+				})
+			}
+		}
+	}
 </script>
+
+<style scoped="scoped">
+
+</style>
