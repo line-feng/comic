@@ -9,7 +9,7 @@
 	export default{
 		data(){
 			return{
-				searchValue:'隆123'
+				searchValue:''
 			}
 		},
 		methods:{
