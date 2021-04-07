@@ -7,13 +7,13 @@ const axios = require('axios'),
 		JSDOM
 	} = jsdom,
 	bodyParser = require('body-parser'),
-	request = require('request');;
+	request = require('request');
 let dom = '';
-app.use(cors());
+
+app.use(cors())
 app.use(bodyParser.json())
 
-
-app.post('/getSearch', async (req, res) => {
+app.post('/api/getSearch', async (req, res) => {
 	let searchHtml = await getSearch(req.body.searchValue)
 	let comicData = getList(searchHtml)
 	res.send({
@@ -22,7 +22,7 @@ app.post('/getSearch', async (req, res) => {
 	})
 })
 
-app.post('/getDeails', async (req, res) => {
+app.post('/api/getDeails', async (req, res) => {
 	// console.log(req.body.url)
 	// return
 	let deailsHtml = await getDeails(req.body.url)
@@ -35,9 +35,9 @@ app.post('/getDeails', async (req, res) => {
 	})
 })
 
-app.post('/getomicView', async (req, res) => {
+app.post('/api/getomicView', async (req, res) => {
 	let html = await getomicView(req.body.url)
-	// console.log(html)
+	console.log(html)
 	// return
 	dom = new JSDOM(html);
 	let contPage = dom.window.document.querySelector(".image-content p").textContent.split('/')
@@ -155,7 +155,7 @@ function getList(html) {
 // 	console.log(mobileUrl)
 // }
 
-// chapter-list-1
+// // chapter-list-1
 
 
 
