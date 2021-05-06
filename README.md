@@ -1,6 +1,5 @@
-# comic
+# [comic](comic.linefeng.xyz)
 #漫画-移动端-h5
-##comic.linefeng.xyz
 
 ## Project setup
 ```
