@@ -1,4 +1,4 @@
-# [comic](comic.linefeng.xyz)
+# [comic](http://comic.linefeng.xyz)
 #漫画-移动端-h5
 
 ## Project setup
