@@ -127,6 +127,9 @@ let util = {
 		let data = await axios(options)
 		return data.data
 	},
+	axiosUtil: function(options) {
+		return axios(options)
+	},
 	//获取章节
 	chapterList: function chapterList(html) {
 		// chapter-list-1
@@ -155,7 +158,7 @@ let util = {
 		}).then((html) => {
 			dom = new JSDOM(html.data);
 			let contPage = dom.window.document.querySelector(".image-content p:last-child").textContent.split('/')
-			console.log(html.data)
+			// console.log(html.data)
 			contPage.splice(0, 1)
 			contPage = contPage.join('')
 
@@ -171,7 +174,6 @@ let util = {
 	},
 	//获取视图
 	micViewList: function micViewList(html) {
-
 		let comicData = {
 			listNum: '',
 			listComic: []
@@ -180,6 +182,30 @@ let util = {
 		dom = new JSDOM(html);
 		listData.imgSrc = dom.window.document.querySelector("#manga-image").getAttribute('src')
 		return listData
+	},
+	//
+	saveImg: function(imgsrc) {
+		let formatting = new Promise((resolve, reject) => {
+			axios({
+					url: imgsrc,
+					responseType: "arraybuffer",
+				})
+				.then(({
+					data
+				}) => {
+					const buffer = Buffer.from(data, 'binary');
+					let img = 'data: image/' + getImageType(imgsrc) + ';base64,' + buffer.toString(
+						'base64');
+					//获取当前图片的格式
+					function getImageType(str) {
+						var reg = /\.(png|jpg|gif|jpeg|webp)$/;
+						return str.match(reg)[1];
+					}
+					resolve(img)
+				})
+		})
+		return formatting
+
 	}
 
 }

@@ -1,6 +1,7 @@
 module.exports = {
 	lintOnSave: false,
-	publicPath: '/',
+	publicPath: './',
+	// publicPath: process.env.NODE_ENV === 'production' ? '/static' : '/',
 	css: {
 		// 是否使用css分离插件 ExtractTextPlugin
 		extract: true,

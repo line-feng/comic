@@ -14,6 +14,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/api/getSearch', async (req, res) => {
+	// console.log(req.body.searchValue)
 	let searchHtml = await getSearch(req.body.searchValue)
 	let comicData = getList(searchHtml)
 	res.send({
@@ -29,6 +30,7 @@ app.post('/api/getDeails', async (req, res) => {
 	// console.log(deailsHtml)
 	// return
 	let comicData = chapterList(deailsHtml)
+	// console.log(comicData)
 	res.send({
 		code: 200,
 		data: comicData
@@ -36,14 +38,19 @@ app.post('/api/getDeails', async (req, res) => {
 })
 
 app.post('/api/getomicView', async (req, res) => {
+	if (!req.body.url) {
+		res.send({
+			code: 200,
+			data: []
+		})
+		return
+	}
 	let html = await getomicView(req.body.url)
-	console.log(html)
-	// return
+
 	dom = new JSDOM(html);
-	let contPage = dom.window.document.querySelector(".image-content p").textContent.split('/')
+	let contPage = dom.window.document.querySelector(".image-content p:last-child").textContent.split('/')
 	let imgList = []
-	contPage.splice(0, 1)
-	contPage = contPage.join('')
+	contPage = contPage[1]
 
 	for (let i = 0; i < contPage; i++) {
 		let arr = req.body.url.split('.')
@@ -52,14 +59,18 @@ app.post('/api/getomicView', async (req, res) => {
 		}
 		let omicViewHtml = await getomicView(arr.join('.'))
 		imgList.push(micViewList(omicViewHtml))
+		if (i == contPage - 1) {
+			// console.log(imgList)
+			res.send({
+				code: 200,
+				data: imgList
+			})
+		}
 	}
 	// return
 	// let omicViewHtml = await getomicView(req.body.url)
 	// let comicData = micViewList(omicViewHtml, req.body.url)
-	res.send({
-		code: 200,
-		data: imgList
-	})
+
 })
 
 //获取漫画
@@ -109,7 +120,7 @@ function micViewList(html, url) {
 	}
 	let listData = {}
 	dom = new JSDOM(html);
-	listData.imgSrc = dom.window.document.querySelector("#image").getAttribute('src')
+	listData.imgSrc = dom.window.document.querySelector("#manga-image").getAttribute('src')
 	return listData
 }
 

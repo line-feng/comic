@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<!-- <input v-model="searchValue" /><button @click="toPath('/search')">btn</button> -->
 		<van-search v-model="searchValue" show-action placeholder="请输入搜索关键词">
 			<template #action>
 			    <div @click="onSearch">搜索</div>

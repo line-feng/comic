@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import Vue,{ createApp } from 'vue'
 import App from './App.vue'
 
 import './comm.css'
@@ -15,8 +15,11 @@ import Vant from 'vant';
 app.use(Vant);
 
 import axios from 'axios'
+//axios二次封装
+// import axios from '@/assets/axios/axios_config.js'
 import qs from 'qs'
-axios.defaults.baseURL='http://49.235.72.251:5555'
+
+axios.defaults.baseURL= process.env.NODE_ENV == 'development' ? 'http://192.168.1.14:5555' : 'http://43.128.47.111:5555'
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$qs = qs
 
